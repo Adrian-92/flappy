@@ -1,5 +1,3 @@
-package screens;
-
 import game.Score;
 
 import javax.swing.*;
@@ -26,7 +24,7 @@ public class StartScreen extends JPanel {
         startButton.addActionListener(startGameListener);
         add(startButton, BorderLayout.SOUTH);
 
-        backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("../assets/flappybirdbg.png"))).getImage();
+        backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("assets/flappybirdbg.png"))).getImage();
     }
 
 

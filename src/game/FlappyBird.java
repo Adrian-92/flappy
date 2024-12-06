@@ -15,6 +15,7 @@ import java.util.Objects;
 
 
 public class FlappyBird extends JPanel implements ActionListener, KeyListener {
+    private Runnable returnToStartScreen;
     int boardWidth = 360;
     int boardHeight = 640;
     Image backgroundImage;
@@ -45,8 +46,9 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
     ArrayList<Pipe> pipes;
 
 
-    public FlappyBird(Score score) {
-        roundScore = score;
+    public FlappyBird(Score score, Runnable returnToStartScreen) {
+        this.roundScore = score;
+        this.returnToStartScreen = returnToStartScreen;
         setPreferredSize(new Dimension(boardWidth, boardHeight));
         setFocusable(true);
         addKeyListener(this);
@@ -67,6 +69,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
     }
 
     public void resetGame() {
+        gameOver = false;
         bird.resetBirdY(birdY);
         velocityY = 0;
         pipes.clear();
@@ -75,10 +78,12 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
         placePipesTimer.start();
     }
 
-    public void stopGame(){
+    public void stopGame() {
+        resetGame();
         gameLoop.stop();
         placePipesTimer.stop();
     }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         draw(g);
@@ -162,22 +167,25 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            velocityY = -9;
-            if (gameOver) {
-                // restart game
-                gameOver = false;
-                bird.resetBirdY(birdY);
-                velocityY = 0;
-                pipes.clear();
-                roundScore.resetScore();
-                gameLoop.start();
-                placePipesTimer.start();
-            }
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_SPACE:
+                velocityY = -9;
+                if (gameOver) {
+                    resetGame();
+                }
+                break;
+            case KeyEvent.VK_ENTER:
+                resetGame();
+                break;
+            case KeyEvent.VK_ESCAPE:
+                stopGame();
+                if (returnToStartScreen != null) {
+                    returnToStartScreen.run();
+                }
+                break;
+
         }
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            resetGame();
-        }
+
     }
 
     @Override

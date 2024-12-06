@@ -1,5 +1,3 @@
-package screens;
-
 import game.FlappyBird;
 import game.Score;
 
@@ -44,7 +42,7 @@ public class GameController {
     }
 
     private JPanel createGameScreen(Score score) {
-        flappyBird = new FlappyBird(score);
+        flappyBird = new FlappyBird(score,() -> cardLayout.show(panel, "Start"));
         return flappyBird;
     }
 }
