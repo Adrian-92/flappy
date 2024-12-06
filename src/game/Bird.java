@@ -1,3 +1,5 @@
+package game;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
@@ -11,7 +13,7 @@ public class Bird {
     private int birdWidth;
     private int birdHeight;
     private Image image;
-    Image birdImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("assets/flappybird.png"))).getImage();
+    Image birdImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("../assets/flappybird.png"))).getImage();
 
     public Bird(int birdX, int birdY, int birdWidth, int birdHeight) {
         this.birdX = birdX;
